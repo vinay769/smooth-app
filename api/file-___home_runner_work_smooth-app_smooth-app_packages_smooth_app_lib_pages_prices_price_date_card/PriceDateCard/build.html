@@ -73,8 +73,7 @@
 Widget build(BuildContext context) {
   final PriceModel model = context.watch&lt;PriceModel&gt;();
   final AppLocalizations appLocalizations = AppLocalizations.of(context);
-  final String locale = ProductQuery.getLocaleString();
-  final DateFormat dateFormat = DateFormat.yMd(locale);
+
   return SmoothCardWithRoundedHeader(
     title: appLocalizations.prices_date_subtitle,
     leading: const Icon(Icons.calendar_month),
@@ -83,7 +82,7 @@ Widget build(BuildContext context) {
       vertical: MEDIUM_SPACE,
     ),
     child: SmoothLargeButtonWithIcon(
-      text: dateFormat.format(model.date),
+      text: MaterialLocalizations.of(context).formatCompactDate(model.date),
       leadingIcon: const Icon(Icons.calendar_month),
       onPressed: model.proof != null
           ? null
@@ -98,12 +97,9 @@ Widget build(BuildContext context) {
                   &#47;&#47; cf. https:&#47;&#47;stackoverflow.com&#47;questions&#47;50321182&#47;how-to-customize-a-date-picker
                   final ThemeData themeData =
                       Theme.of(context).brightness == Brightness.light
-                          ? ThemeData.light()
-                          : ThemeData.dark();
-                  return Theme(
-                    data: themeData.copyWith(),
-                    child: child!,
-                  );
+                      ? ThemeData.light()
+                      : ThemeData.dark();
+                  return Theme(data: themeData.copyWith(), child: child!);
                 },
               );
               if (newDate == null) {
